@@ -1,3 +1,13 @@
 # ninja log v6
-8	86	1743433653214943963	build.ninja	a10b63d4271a0211
 1	204	1743430415013843235	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/firmware/common/rad1o/decoder.c.o	3487aee5bd913153
+1	18	1744633613819870209	build.ninja	a10b63d4271a0211
+119	174	1744557614654763177	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_spiflash.c.o	f82b583b8a727dbc
+1	64	1744557614536761990	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/getopt/getopt.c.o	3eeec2557575391b
+110	162	1744557614645763087	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_operacake.c.o	8426283304ea5f93
+1	368	1744557761785249362	CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o	ff68e0d1d86cb572
+1	107	1744557614536761990	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_biast.c.o	8ad3930a3001228
+1	110	1744557614536761990	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_cpldjtag.c.o	2496886d1242d69c
+1	119	1744557614536761990	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_clock.c.o	ab5f736791f78012
+64	130	1744557614599762624	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_debug.c.o	399d7c3d538db2a4
+130	225	1744557614665763288	CMakeFiles/RFI_base_on_libhackrf.dir/hackrf/host/hackrf-tools/src/hackrf_sweep.c.o	4e2351d59700aa69
+1	339	1744633646133577962	CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o	ff68e0d1d86cb572

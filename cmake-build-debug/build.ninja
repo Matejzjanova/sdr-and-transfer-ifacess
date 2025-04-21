@@ -41,18 +41,64 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target libhackrf
+
+
+#############################################
+# Order-only phony target for libhackrf
+
+build cmake_object_order_depends_target_libhackrf: phony || .
+
+build CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o: C_COMPILER__libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src/hackrf.c || cmake_object_order_depends_target_libhackrf
+  DEP_FILE = CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
+  OBJECT_DIR = CMakeFiles/libhackrf.dir
+  OBJECT_FILE_DIR = CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target libhackrf
+
+
+#############################################
+# Link the static library liblibhackrf.a
+
+build liblibhackrf.a: C_STATIC_LIBRARY_LINKER__libhackrf_Debug CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = CMakeFiles/libhackrf.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = liblibhackrf.a
+  TARGET_PDB = libhackrf.a.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target RFI_base_on_libhackrf
 
 
 #############################################
 # Order-only phony target for RFI_base_on_libhackrf
 
-build cmake_object_order_depends_target_RFI_base_on_libhackrf: phony || .
+build cmake_object_order_depends_target_RFI_base_on_libhackrf: phony || cmake_object_order_depends_target_libhackrf
 
 build CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o: CXX_COMPILER__RFI_base_on_libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/HackRFControl.cpp || cmake_object_order_depends_target_RFI_base_on_libhackrf
   DEP_FILE = CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/. -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/firmware/common -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/firmware/common/rad1o -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/firmware/common/xapp058 -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/firmware/hackrf_usb -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/hardware -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/hackrf-tools/getopt -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
+  OBJECT_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
+  OBJECT_FILE_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
+
+build CMakeFiles/RFI_base_on_libhackrf.dir/receive.cpp.o: CXX_COMPILER__RFI_base_on_libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/receive.cpp || cmake_object_order_depends_target_RFI_base_on_libhackrf
+  DEP_FILE = CMakeFiles/RFI_base_on_libhackrf.dir/receive.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
+  OBJECT_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
+  OBJECT_FILE_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
+
+build CMakeFiles/RFI_base_on_libhackrf.dir/wav.cpp.o: CXX_COMPILER__RFI_base_on_libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/wav.cpp || cmake_object_order_depends_target_RFI_base_on_libhackrf
+  DEP_FILE = CMakeFiles/RFI_base_on_libhackrf.dir/wav.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
   OBJECT_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
   OBJECT_FILE_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
 
@@ -64,8 +110,9 @@ build CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o: CXX_COMPILER__RF
 #############################################
 # Link the executable RFI_base_on_libhackrf
 
-build RFI_base_on_libhackrf: CXX_EXECUTABLE_LINKER__RFI_base_on_libhackrf_Debug CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o
+build RFI_base_on_libhackrf: CXX_EXECUTABLE_LINKER__RFI_base_on_libhackrf_Debug CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o CMakeFiles/RFI_base_on_libhackrf.dir/receive.cpp.o CMakeFiles/RFI_base_on_libhackrf.dir/wav.cpp.o | liblibhackrf.a /usr/lib/x86_64-linux-gnu/libusb-1.0.so || liblibhackrf.a
   FLAGS = -g
+  LINK_LIBRARIES = liblibhackrf.a  /usr/lib/x86_64-linux-gnu/libusb-1.0.so
   OBJECT_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -98,6 +145,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build libhackrf: phony liblibhackrf.a
+
 # =============================================================================
 # Folder targets.
 
@@ -106,7 +155,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug
 
-build all: phony RFI_base_on_libhackrf
+build all: phony liblibhackrf.a RFI_base_on_libhackrf
 
 # =============================================================================
 # Built-in targets
@@ -115,14 +164,14 @@ build all: phony RFI_base_on_libhackrf
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/misha/CLionProjects/RFI_base_on_libhackrf/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFile.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckLibraryExists.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPkgConfig.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/misha/CLionProjects/RFI_base_on_libhackrf/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/misha/CLionProjects/RFI_base_on_libhackrf/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake: phony
+build /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckIncludeFile.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckLibraryExists.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPackageMessage.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindPkgConfig.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/misha/CLionProjects/RFI_base_on_libhackrf/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake: phony
 
 
 #############################################

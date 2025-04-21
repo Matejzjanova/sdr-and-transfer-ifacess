@@ -544,3 +544,35 @@ events:
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.42
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "/home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "CMakeLists.txt:16 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fdjtiT"
+      binary: "/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fdjtiT"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fdjtiT'
+        
+        Run Build Command(s): /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/ninja/linux/x64/ninja -v cmTC_80561
+        [1/2] /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu11 -o CMakeFiles/cmTC_80561.dir/src.c.o -c /home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fdjtiT/src.c
+        [2/2] : && /usr/bin/cc   CMakeFiles/cmTC_80561.dir/src.c.o -o cmTC_80561   && :
+        
+      exitCode: 0
+...

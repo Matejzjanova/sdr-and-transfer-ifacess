@@ -221,6 +221,21 @@ LIBUSB_INCLUDE_DIR:PATH=/usr/include/libusb-1.0
 //Path to a library.
 LIBUSB_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libusb.so
 
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
+//Value Computed by CMake
+Project_BINARY_DIR:STATIC=/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug
+
+//Value Computed by CMake
+Project_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Project_SOURCE_DIR:STATIC=/home/misha/CLionProjects/RFI_base_on_libhackrf
+
 //Value Computed by CMake
 RFI_base_on_libhackrf_BINARY_DIR:STATIC=/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug
 
@@ -229,6 +244,12 @@ RFI_base_on_libhackrf_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 RFI_base_on_libhackrf_SOURCE_DIR:STATIC=/home/misha/CLionProjects/RFI_base_on_libhackrf
+
+//The directory containing a CMake configuration file for libusb.
+libusb_DIR:PATH=libusb_DIR-NOTFOUND
+
+//Path to a library.
+pkgcfg_lib_LIBUSB_usb-1.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libusb-1.0.so
 
 
 ########################
@@ -311,6 +332,8 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/misha/CLionProjects/RFI_base_on_libhackrf
@@ -376,6 +399,54 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+LIBUSB_CFLAGS:INTERNAL=-I/usr/include/libusb-1.0
+LIBUSB_CFLAGS_I:INTERNAL=
+LIBUSB_CFLAGS_OTHER:INTERNAL=
+LIBUSB_FOUND:INTERNAL=1
+LIBUSB_INCLUDEDIR:INTERNAL=/usr/include
+LIBUSB_INCLUDE_DIRS:INTERNAL=/usr/include/libusb-1.0
+LIBUSB_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lusb-1.0
+LIBUSB_LDFLAGS_OTHER:INTERNAL=
+LIBUSB_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+LIBUSB_LIBRARIES:INTERNAL=usb-1.0
+LIBUSB_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+LIBUSB_LIBS:INTERNAL=
+LIBUSB_LIBS_L:INTERNAL=
+LIBUSB_LIBS_OTHER:INTERNAL=
+LIBUSB_LIBS_PATHS:INTERNAL=
+LIBUSB_MODULE_NAME:INTERNAL=libusb-1.0
+LIBUSB_PREFIX:INTERNAL=/usr
+LIBUSB_STATIC_CFLAGS:INTERNAL=-I/usr/include/libusb-1.0
+LIBUSB_STATIC_CFLAGS_I:INTERNAL=
+LIBUSB_STATIC_CFLAGS_OTHER:INTERNAL=
+LIBUSB_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/libusb-1.0
+LIBUSB_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lusb-1.0;-ludev
+LIBUSB_STATIC_LDFLAGS_OTHER:INTERNAL=
+LIBUSB_STATIC_LIBDIR:INTERNAL=
+LIBUSB_STATIC_LIBRARIES:INTERNAL=usb-1.0;udev
+LIBUSB_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+LIBUSB_STATIC_LIBS:INTERNAL=
+LIBUSB_STATIC_LIBS_L:INTERNAL=
+LIBUSB_STATIC_LIBS_OTHER:INTERNAL=
+LIBUSB_STATIC_LIBS_PATHS:INTERNAL=
+LIBUSB_VERSION:INTERNAL=1.0.27
+LIBUSB_libusb-1.0_INCLUDEDIR:INTERNAL=
+LIBUSB_libusb-1.0_LIBDIR:INTERNAL=
+LIBUSB_libusb-1.0_PREFIX:INTERNAL=
+LIBUSB_libusb-1.0_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
+__pkg_config_arguments_LIBUSB:INTERNAL=REQUIRED;libusb-1.0
+__pkg_config_checked_LIBUSB:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBUSB_usb-1.0
+pkgcfg_lib_LIBUSB_usb-1.0-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu
 

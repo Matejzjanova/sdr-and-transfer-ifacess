@@ -1,4 +1,0 @@
-/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/libhackrf.dir
-/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/RFI_base_on_libhackrf.dir
-/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug/CMakeFiles/rebuild_cache.dir

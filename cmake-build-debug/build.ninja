@@ -56,6 +56,20 @@ build CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o: C_COMPILER_
   OBJECT_DIR = CMakeFiles/libhackrf.dir
   OBJECT_FILE_DIR = CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src
 
+build CMakeFiles/libhackrf.dir/HackRFControl.cpp.o: CXX_COMPILER__libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/HackRFControl.cpp || cmake_object_order_depends_target_libhackrf
+  DEP_FILE = CMakeFiles/libhackrf.dir/HackRFControl.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
+  OBJECT_DIR = CMakeFiles/libhackrf.dir
+  OBJECT_FILE_DIR = CMakeFiles/libhackrf.dir
+
+build CMakeFiles/libhackrf.dir/IRFControl.cpp.o: CXX_COMPILER__libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/IRFControl.cpp || cmake_object_order_depends_target_libhackrf
+  DEP_FILE = CMakeFiles/libhackrf.dir/IRFControl.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
+  OBJECT_DIR = CMakeFiles/libhackrf.dir
+  OBJECT_FILE_DIR = CMakeFiles/libhackrf.dir
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target libhackrf
@@ -64,7 +78,7 @@ build CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o: C_COMPILER_
 #############################################
 # Link the static library liblibhackrf.a
 
-build liblibhackrf.a: C_STATIC_LIBRARY_LINKER__libhackrf_Debug CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o
+build liblibhackrf.a: CXX_STATIC_LIBRARY_LINKER__libhackrf_Debug CMakeFiles/libhackrf.dir/hackrf/host/libhackrf/src/hackrf.c.o CMakeFiles/libhackrf.dir/HackRFControl.cpp.o CMakeFiles/libhackrf.dir/IRFControl.cpp.o
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/libhackrf.dir
   POST_BUILD = :
@@ -81,8 +95,8 @@ build liblibhackrf.a: C_STATIC_LIBRARY_LINKER__libhackrf_Debug CMakeFiles/libhac
 
 build cmake_object_order_depends_target_RFI_base_on_libhackrf: phony || cmake_object_order_depends_target_libhackrf
 
-build CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o: CXX_COMPILER__RFI_base_on_libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/HackRFControl.cpp || cmake_object_order_depends_target_RFI_base_on_libhackrf
-  DEP_FILE = CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o.d
+build CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControlPast.cpp.o: CXX_COMPILER__RFI_base_on_libhackrf_unscanned_Debug /home/misha/CLionProjects/RFI_base_on_libhackrf/HackRFControlPast.cpp || cmake_object_order_depends_target_RFI_base_on_libhackrf
+  DEP_FILE = CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControlPast.cpp.o.d
   FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
   INCLUDES = -I/home/misha/CLionProjects/RFI_base_on_libhackrf/hackrf/host/libhackrf/src -I/usr/include/libusb-1.0
   OBJECT_DIR = CMakeFiles/RFI_base_on_libhackrf.dir
@@ -110,7 +124,7 @@ build CMakeFiles/RFI_base_on_libhackrf.dir/wav.cpp.o: CXX_COMPILER__RFI_base_on_
 #############################################
 # Link the executable RFI_base_on_libhackrf
 
-build RFI_base_on_libhackrf: CXX_EXECUTABLE_LINKER__RFI_base_on_libhackrf_Debug CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControl.cpp.o CMakeFiles/RFI_base_on_libhackrf.dir/receive.cpp.o CMakeFiles/RFI_base_on_libhackrf.dir/wav.cpp.o | liblibhackrf.a /usr/lib/x86_64-linux-gnu/libusb-1.0.so || liblibhackrf.a
+build RFI_base_on_libhackrf: CXX_EXECUTABLE_LINKER__RFI_base_on_libhackrf_Debug CMakeFiles/RFI_base_on_libhackrf.dir/HackRFControlPast.cpp.o CMakeFiles/RFI_base_on_libhackrf.dir/receive.cpp.o CMakeFiles/RFI_base_on_libhackrf.dir/wav.cpp.o | liblibhackrf.a /usr/lib/x86_64-linux-gnu/libusb-1.0.so || liblibhackrf.a
   FLAGS = -g
   LINK_LIBRARIES = liblibhackrf.a  /usr/lib/x86_64-linux-gnu/libusb-1.0.so
   OBJECT_DIR = CMakeFiles/RFI_base_on_libhackrf.dir

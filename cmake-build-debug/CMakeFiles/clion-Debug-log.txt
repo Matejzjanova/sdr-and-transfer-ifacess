@@ -1,13 +1,4 @@
 /home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/misha/CLion-2024.2.2_Downloadly.ir/clion-2024.2.2/bin/ninja/linux/x64/ninja -G Ninja -S /home/misha/CLionProjects/RFI_base_on_libhackrf -B /home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug
--- Configuring done (0.1s)
-CMake Error at CMakeLists.txt:24 (add_executable):
-  Cannot find source file:
-
-    wav.cpp
-
-
-CMake Error at CMakeLists.txt:24 (add_executable):
-  No SOURCES given to target: RFI_base_on_libhackrf
-
-
-CMake Generate step failed.  Build files cannot be regenerated correctly.
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/misha/CLionProjects/RFI_base_on_libhackrf/cmake-build-debug

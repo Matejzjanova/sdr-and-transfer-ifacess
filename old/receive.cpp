@@ -1,7 +1,7 @@
 //
 // Created by misha on 19.04.2025.
 //
-#include "HackRFControl.cpp"
+#include "HackRFControlPast.cpp"
 int main() {
     auto * device = new HackRFControl();
 //    cout << "Дошли" << endl;

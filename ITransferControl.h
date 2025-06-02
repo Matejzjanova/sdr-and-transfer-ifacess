@@ -11,6 +11,10 @@
 class ITransferControl {
     virtual void* allocateBuf(size_t size) = 0;
     virtual void setIRQsize(size_t size) = 0;
-    virtual void setIRQManager(std::function<void(void*, size_t)>) = 0;
+    virtual void setIRQManager(std::function<void(void*, size_t)> manager) = 0;
+
+    void* buff;
+    std::function<void(void*, size_t)>  manager;
+    size_t irqSize;
 };
 #endif //RFI_BASE_ON_LIBHACKRF_ITRANSFERCONTROL_H

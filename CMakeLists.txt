@@ -14,7 +14,6 @@ add_library(libhackrf STATIC
         hackrf/host/libhackrf/src/hackrf.c
         HackRFControl.h
         HackRFControl.cpp
-        IStreamControl.h
 )
 target_include_directories(libhackrf PUBLIC
         hackrf/host/libhackrf/src

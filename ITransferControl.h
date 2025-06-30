@@ -8,13 +8,44 @@
 #include "stdint.h"
 #include "hackrf/host/libhackrf/src/hackrf.h"
 #include "functional"
+#include "ITransferParams.h"
 class ITransferControl {
-    virtual void* allocateBuf(size_t size) = 0;
-    virtual void setIRQsize(size_t size) = 0;
-    virtual void setIRQManager(std::function<void(void*, size_t)> manager) = 0;
+public:
+    using Handler = std::function<void(void* ptr, std::size_t sz)>;
+    ITransferControl(const TransferParams&) {};
+    virtual ~ITransferControl() = default;
+    /**
+	 * @brief setHandler
+	 * @param h обработчик прерывания, вызываемый при получении прерывания от источника (например, драйвера)
+	 */
+    virtual void setHandler(Handler handler) = 0;
 
-    void* buff;
-    std::function<void(void*, size_t)>  manager;
-    size_t irqSize;
+    /**
+     * @brief setPacketCount
+     * @param packetCount количество пакетов в одном прерывании
+     */
+    virtual void setPacketCount(std::size_t packetCount) = 0;
+
+    /**
+     * @brief getPacketSize
+     * @return
+     */
+    virtual std::size_t getPacketSize() const = 0;
+
+    /**
+     * @brief initalize
+     */
+    virtual void initalize() = 0;
+
+    /**
+     * @brief finalize
+     */
+    virtual void finalize() = 0;
+
+    /**
+     * @brief setType
+     * @param t
+     */
+    virtual void setType(TransferParams::Type t) = 0;
 };
 #endif //RFI_BASE_ON_LIBHACKRF_ITRANSFERCONTROL_H

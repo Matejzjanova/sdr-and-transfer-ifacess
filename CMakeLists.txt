@@ -12,8 +12,8 @@ pkg_check_modules(LIBUSB REQUIRED libusb-1.0)
 
 add_library(libhackrf STATIC
         hackrf/host/libhackrf/src/hackrf.c
-        HackRFControl.h
-        HackRFControl.cpp
+        old/HackRFControl.h
+        old/HackRFControl.cpp
 )
 target_include_directories(libhackrf PUBLIC
         hackrf/host/libhackrf/src
@@ -24,12 +24,9 @@ target_link_libraries(libhackrf PRIVATE
         ${LIBUSB_LINK_LIBRARIES}
 )
 add_executable(RFI_base_on_libhackrf
-        HackRFControlPast.cpp
-        receive.cpp
-        wav.cpp
+         ITransferParams.h ITransferControl.h ISDRStreamTransfer.h  SDREmulator.h SDREmulator.cpp TransferEmulator.h TransferEmulator.cpp  main.cpp
 )
 target_link_libraries(RFI_base_on_libhackrf PRIVATE
-        libhackrf
 )
 
 

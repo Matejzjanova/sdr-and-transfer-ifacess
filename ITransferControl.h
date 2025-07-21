@@ -12,7 +12,7 @@
 class ITransferControl {
 public:
     using Handler = std::function<void(void* ptr, std::size_t sz)>;
-    ITransferControl(const TransferParams&) {};
+    ITransferControl(const TransferParams& params) {};
     virtual ~ITransferControl() = default;
     /**
 	 * @brief setHandler
@@ -35,7 +35,7 @@ public:
     /**
      * @brief initalize
      */
-    virtual void initalize() = 0;
+    virtual void initialize() = 0;
 
     /**
      * @brief finalize

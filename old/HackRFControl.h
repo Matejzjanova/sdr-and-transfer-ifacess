@@ -6,10 +6,10 @@
 #define RFI_BASE_ON_LIBHACKRF_HACKRFCONTROL_H
 
 
-#include "IRFControl.h"
+#include "../IRFControl.h"
 #include "IStreamControl.h"
-#include "ITransferControl.h"
-#include "hackrf/host/libhackrf/src/hackrf.h"
+#include "../ITransferControl.h"
+#include "hackrf.h"
 #include <stdexcept>
 #include <iostream>
 #include <string>

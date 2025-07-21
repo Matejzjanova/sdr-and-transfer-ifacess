@@ -8,6 +8,8 @@
 #include "stdint.h"
 #include "hackrf/host/libhackrf/src/hackrf.h"
 
+
+
 class IRFControl {
     virtual void setFrequency(uint64_t freq) = 0;
     virtual void setLNA(uint32_t gain) = 0;

@@ -7,7 +7,9 @@
 #include "ITransferControl.h"
 #endif //RFI_BASE_ON_LIBHACKRF_ISDRSTREAMTRANSFER_H
 class ISDRStreamTransfer : public ITransferControl {
-    virtual void start();
-    virtual void startCounter();
-    virtual void stop();
+public:
+    ISDRStreamTransfer(const TransferParams& params) : ITransferControl(params) {}
+    virtual void start() = 0;
+    virtual void startCounter() = 0;
+    virtual void stop() = 0;
 };

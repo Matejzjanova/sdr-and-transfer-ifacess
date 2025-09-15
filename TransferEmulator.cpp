@@ -5,7 +5,8 @@
 #include "TransferEmulator.h"
 #include "ITransferParams.h"
 void TransferEmulator::setHandler(ITransferControl::Handler handler) {
-    this->params_.handler = handler;
+    this->handler = std::move(handler);
+
 }
 
 void TransferEmulator::setPacketCount(std::size_t packetCount) {
@@ -18,21 +19,34 @@ size_t TransferEmulator::getPacketSize() const {
 
 void TransferEmulator::start() {
     if(params_.type == TransferParams::Type::loop) {
-        sdrEmulator->start_rx(bridge);
-
+        if(sdrEmulator == nullptr) throw std::runtime_error("Initialize SDR first!")  ;
+        if(handler == nullptr) throw std::runtime_error("Initialize handler first!");
+        sdr_start_rx(
+                sdrEmulator.get(),
+                &bridge);
     }
     else {
     }
 }
 
-void TransferEmulator::bridge(emulator_transfer transfer, void *params) {
-   static_cast<TransferParams*>(params)->handler(transfer.buff, transfer.valid_buff_length);
+void TransferEmulator::bridge(emulator_transfer transfer, void * hdl) {
+    static_cast<TransferEmulator*>(hdl)->handler(static_cast<void*>(transfer.buff), transfer.valid_buff_length);
 }
 
 void TransferEmulator::stop() {
-sdrEmulator->stop();
+    if(sdr_stop(sdrEmulator.get()) != EmulCodes::EMULATOR_SUCCESS) {
+        throw std::runtime_error("Initialize SDR first!");
+    }
 }
 void TransferEmulator::initialize() {
+
+   // if (sdr_init() != EmulCodes::EMULATOR_SUCCESS) throw std::runtime_error("Smth gone wrong while init open");
+
+    SDREmulator* iEmulator = new SDREmulator();
+    //EmulCodes resOpen = sdr_open(*iEmulator);
+    //if (resOpen != EmulCodes::EMULATOR_SUCCESS) throw std::runtime_error("Smth gone wrong while open sdr");
+    sdrEmulator = std::unique_ptr<SDREmulator>(iEmulator);
+
 }
 
 void TransferEmulator::finalize() {
@@ -46,20 +60,7 @@ void TransferEmulator::setType(TransferParams::Type t) {
     params_.type = t;
 }
 
-void TransferEmulator::setSampleRate(uint32_t sr) {
-    config_.sampleRate = sr;
-    sdrEmulator->set_sr(sr);
-}
 
-void TransferEmulator::setFrequency(uint64_t freq) {
-    throw std::logic_error("invalid emulator param") ;
-}
-void TransferEmulator::setVGA(uint32_t gain) {
-    throw std::logic_error("invalid emulator param") ;
-}
-void TransferEmulator::setLNA(uint32_t gain) {
-    throw std::logic_error("invalid emulator param") ;
-}
-void TransferEmulator::setAtt(uint32_t gain) {
-    throw std::logic_error("invalid emulator param") ;
+EmulStat TransferEmulator::getState() {
+    return sdrEmulator->status;
 }

@@ -1,8 +1,5 @@
 //
-// Created by misha on 21.07.2025.
+// Created by misha on 13.09.2025.
 //
-#include "TransferEmulator.h"
-int main() {
-    TransferParams params(1, TransferParams::Type::loop, 100);
-    TransferEmulator SDR1(params);
-}
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest/doctest/doctest.h"

@@ -7,13 +7,23 @@
 #include "ISDRStreamTransfer.h"
 #include "SDREmulator.h" //эмулирует какой-то источник данных, работающий по схеме с буффером
 #include "string"
-#include "IRFControl.h"
-#include "RFConfig.h"
+#include <memory>
 
-class TransferEmulator : ISDRStreamTransfer, IRFControl { //реализация для эмулятора SDRTransferEmulator
+class TransferEmulator : ISDRStreamTransfer  { //реализация для эмулятора SDRTransferEmulator
 public:
-    TransferEmulator(const TransferParams& params, const RFConfig& config) : ISDRStreamTransfer(params), params_(params), config_(config) {
-    }
+   explicit TransferEmulator(const TransferParams& params) : ISDRStreamTransfer(params), params_(params) {
+        EmulCodes resInit = sdr_init();
+        if(resInit != EmulCodes::EMULATOR_SUCCESS) {
+            throw std::runtime_error("Smth gone wrong while init");
+        }
+
+       // EmulCodes resOpen = sdr_open(sdrEmulator.get()); if(resOpen != EmulCodes::EMULATOR_SUCCESS) {
+       //     // std::cout << "ERROR: SDR can't open with code " << resOpen << std::endl;
+       //     throw std::runtime_error("");
+       // }
+
+   }
+
    void setHandler(ITransferControl::Handler handler) override;
    void setPacketCount(std::size_t packetCount) override;
    std::size_t getPacketSize() const override;
@@ -21,22 +31,16 @@ public:
    void initialize() override;
    void startCounter() override;
    void setType(TransferParams::Type t) override;
-
-
-   void setSampleRate(uint32_t sr) override;
-   void setAtt(uint32_t gain) override;
-   void setLNA(uint32_t gain) override;
-   void setFrequency(uint64_t freq) override;
-   void setVGA(uint32_t gain) override;
+   EmulStat getState();
 
    void start() override;
    void stop() override;
-   void static bridge(emulator_transfer, void *params);
+   void static bridge(emulator_transfer t, void* ctx);
+   std::function<void(void* ptr, std::size_t sz)> handler;
 
 private:
     TransferParams params_;
-    RFConfig config_;
-    SDREmulator* sdrEmulator;
+    std::unique_ptr<SDREmulator> sdrEmulator;
 
 };
 

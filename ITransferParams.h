@@ -14,7 +14,6 @@ struct TransferParams {
     size_t id;
     Type type;
     std::size_t bufferSize;
-    std::function<void(void* ptr, std::size_t sz)> handler;
 };
 
 inline bool operator == (const TransferParams& left,const TransferParams& right){

@@ -5,8 +5,6 @@
 #ifndef RFI_BASE_ON_LIBHACKRF_ITRANSFERCONTROL_H
 #define RFI_BASE_ON_LIBHACKRF_ITRANSFERCONTROL_H
 
-#include "stdint.h"
-#include "hackrf/host/libhackrf/src/hackrf.h"
 #include "functional"
 #include "ITransferParams.h"
 class ITransferControl {

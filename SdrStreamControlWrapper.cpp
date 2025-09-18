@@ -2,7 +2,7 @@
 // Created by misha on 08.09.2025.
 //
 
-#include "SdrStreamControlWrapper.h"
+#include "transfer_interface/transfer.h"
 #include "cmath"
 SdrStreamControlWrapper::SdrStreamControlWrapper(std::function<ISDRStreamTransfer&(uint32_t)>&& fun, uint32_t mask) {
    getter = fun;

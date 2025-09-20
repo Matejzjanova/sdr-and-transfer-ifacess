@@ -65,6 +65,7 @@ TEST_F(SdrEmulatorTest, RxTest) {
     emulator1.start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     emulator1.stop();
+    emulator1.finalize();
 }
 
 TEST_F(SdrEmulatorTest, RxTestUs){
@@ -128,4 +129,44 @@ TEST_F(SdrEmulatorTest, RxTestManyPackage) {
     emulator1.startCounter();
     std::this_thread::sleep_for(std::chrono::seconds (15));
     emulator1.finalize();
+}
+
+TEST_F(SdrEmulatorTest, EmulatorIn2DiffModes) {
+    emulator1.setSampleRate(1e6);
+    emulator1.initialize();
+    emulator1.start();
+    std::this_thread::sleep_for(std::chrono::seconds (1));
+    emulator1.stop();
+
+    emulator1.setSampleRate(1e4);
+    emulator1.setPacketSize(350);
+    emulator1.setType(TransferParams::Type::single);
+    emulator1.start();
+    std::this_thread::sleep_for(std::chrono::seconds (3));
+    emulator1.finalize();
+}
+
+TEST_F(SdrEmulatorTest, EmulatorIn3DiffModes) {
+
+    emulator1.setSampleRate(1e6);
+    emulator1.initialize();
+    emulator1.start();
+    std::this_thread::sleep_for(std::chrono::seconds (1));
+    emulator1.stop();
+
+    emulator1.setSampleRate(1e4);
+    emulator1.setPacketSize(350);
+    emulator1.setType(TransferParams::Type::single);
+    emulator1.start();
+    std::this_thread::sleep_for(std::chrono::seconds (3));
+
+    emulator1.setType(TransferParams::Type::loop);
+    emulator1.start();
+    std::this_thread::sleep_for(std::chrono::seconds (1));
+    emulator1.stop();
+
+    emulator1.setPacketSize(512);
+    emulator1.setPacketCount(20);
+    emulator1.startCounter();
+    std::this_thread::sleep_for(std::chrono::seconds (5));
 }

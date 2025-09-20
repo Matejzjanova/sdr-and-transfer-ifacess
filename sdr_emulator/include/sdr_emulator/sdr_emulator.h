@@ -60,9 +60,9 @@ private:
     uint64_t sample_rate_ = 1000;
     uint8_t * native_buffer_;
 
-    std::atomic_flag is_rx_;
-    std::thread * rx_thread_;
-    size_t * bytes_read_;
+    std::atomic_flag is_rx_ ;
+    std::thread * rx_thread_ = nullptr;
+    size_t * bytes_read_ = nullptr;
 };
 
 #endif //RFI_BASE_ON_LIBHACKRF_TEST_TRANSFEREMULATOR_H

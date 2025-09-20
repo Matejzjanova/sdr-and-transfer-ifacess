@@ -12,15 +12,22 @@ SdrEmulator::SdrEmulator(size_t id, const TransferParams &params) : ISDRStreamTr
     params_ = params;
     state_ = State::waiting;
     is_rx_.clear();
+    native_buffer_ = nullptr;
 }
 
 void SdrEmulator::initialize() {
     //smth init code
+    if (native_buffer_) {
+        throw std::runtime_error("Emulator already init");
+    }
     native_buffer_ = new uint8_t[params_.bufferSize];
     bytes_read_ = new size_t;
 }
 
 void SdrEmulator::setHandler(ITransferControl::Handler handler) {
+    if(state_ == State::receiving) {
+        throw std::runtime_error("Stop receiving before change params");
+    }
     handler_ = handler;
 }
 
@@ -29,6 +36,9 @@ void SdrEmulator::setType(TransferParams::Type t) {
 }
 
 void SdrEmulator::setPacketCount(std::size_t packetCount) {
+    if(state_ == State::receiving) {
+        throw std::runtime_error("Stop receiving before change params");
+    }
     params_.packageCount = packetCount;
 }
 
@@ -80,7 +90,9 @@ void SdrEmulator::start() {
     auto startInRxThread = [&] ()  {
         size_t valid_length = params_.bufferSize;
         size_t total_bytes_rx = 0;
+
         if(params_.type == TransferParams::Type::loop) {
+
                 is_rx_.test_and_set();
                 while (is_rx_.test()) {
                     receivePackage(native_buffer_, valid_length);
@@ -93,11 +105,14 @@ void SdrEmulator::start() {
                     }
                 }
         }
+
         else if (params_.type == TransferParams::Type::single) {
+
             receivePackage(native_buffer_, valid_length);
             if (bytes_read_) {
-                printf("Bytes read: %lu\n", *bytes_read_);
+                printf("Bytes read: %lu\n", params_.packageSize);
             }
+            state_ = State::waiting;
         }
         *bytes_read_ = total_bytes_rx;
     };
@@ -127,11 +142,12 @@ void SdrEmulator::startCounter() {
 
     auto startCounterInOtherThread = [&] () {
         is_rx_.test_and_set();
+        size_t total_bytes_rx = 0;
         size_t valid_length = params_.bufferSize;
         for (int i = 0; i !=  params_.packageCount && is_rx_.test(); i++) {
 
             receivePackage(native_buffer_ + i*params_.packageSize, valid_length);
-
+            total_bytes_rx+=params_.packageSize;
             //eсли доступная длина буфера меньше размера пакета, то "переносимся в начало" буфера
             if(valid_length < params_.packageSize) {
                 valid_length = params_.bufferSize - valid_length;
@@ -141,6 +157,11 @@ void SdrEmulator::startCounter() {
                 valid_length -= params_.packageSize;
             }
         }
+        state_ = State::waiting;
+        *bytes_read_ = total_bytes_rx;
+        printf("Bytes read: %lu\n", *bytes_read_);
+
+
     };
     state_ = SdrEmulator::State::receiving;
     rx_thread_ = new std::thread(startCounterInOtherThread);
@@ -157,7 +178,7 @@ void SdrEmulator::stop() {
     state_ = State::waiting;
 
     if (bytes_read_) {
-        printf("Bytes read: %lu", *bytes_read_);
+        printf("Bytes read: %lu\n", *bytes_read_);
     }
 }
 
@@ -165,6 +186,7 @@ void SdrEmulator::finalize() {
     if(state_ == State::receiving) {
         stop();
     }
+    rx_thread_->join();
     delete rx_thread_;
     delete [] native_buffer_;
 }
@@ -178,10 +200,16 @@ void * SdrEmulator::toContext() noexcept {
 }
 
 void SdrEmulator::setSampleRate(uint64_t samples) {
+    if(state_ == State::receiving) {
+        throw std::runtime_error("Stop receiving before change params");
+    }
     sample_rate_ = samples;
 }
 
 void SdrEmulator::setPacketSize(std::size_t packetSize) {
+    if(state_ == State::receiving) {
+        throw std::runtime_error("Stop receiving before change params");
+    }
     params_.packageSize = packetSize;
 }
 

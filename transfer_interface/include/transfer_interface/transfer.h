@@ -15,12 +15,13 @@ struct TransferParams {
 
     TransferParams() = default;
     TransferParams(size_t id, Type type, size_t buffSize, size_t chunkSize) : id(id), type(type),
-        bufferSize(buffSize),
-        chunkSize(chunkSize) {}
+                                                                              bufferSize(buffSize),
+                                                                              packageSize(chunkSize) {}
     size_t id;
     Type type;
     std::size_t bufferSize;
-    std::size_t chunkSize;
+    std::size_t packageSize;
+    std::size_t packageCount = 0;
 };
 
 inline bool operator == (const TransferParams& left,const TransferParams& right){
@@ -40,9 +41,15 @@ public:
 
     /**
      * @brief setPacketCount
-     * @param packetCount количество пакетов в одном прерывании
+     * @param packetCount количество пакетов в пакетном режиме работы
      */
     virtual void setPacketCount(std::size_t packetCount) = 0;
+
+    /**
+     * @brief getPacketSize
+     * @param packetSize размер пакета в прерывании
+     */
+    virtual void setPacketSize(std::size_t  packetSize) = 0;
 
     /**
      * @brief getPacketSize
@@ -51,17 +58,17 @@ public:
     virtual std::size_t getPacketSize() const = 0;
 
     /**
-     * @brief initalize
+     * @brief initalize инициализирует динамические с-ры данных (типа буфера)
      */
     virtual void initialize() = 0;
 
     /**
-     * @brief finalize
+     * @brief finalize освобождает память из-под динамических с-р (типа буфера)
      */
     virtual void finalize() = 0;
 
     /**
-     * @brief setType
+     * @brief setType тип приема -- пакетный или в цикле
      * @param t
      */
     virtual void setType(TransferParams::Type t) = 0;
@@ -71,6 +78,10 @@ class ISDRStreamTransfer : public ITransferControl {
 public:
     explicit ISDRStreamTransfer(const TransferParams& params) : ITransferControl(params) {}
     virtual void start() = 0;
+    /**
+     * @brief startCounter получить и обработать кол-во пакетов,
+     * переданное методом setPacketCount
+     */
     virtual void startCounter() = 0;
     virtual void stop() = 0;
 };

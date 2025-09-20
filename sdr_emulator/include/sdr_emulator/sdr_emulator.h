@@ -16,7 +16,6 @@ public:
     enum class State : int {
         waiting = 1,
         receiving = 2,
-        flushing = 3
     };
 
     explicit SdrEmulator(size_t id = __LINE__,
@@ -25,6 +24,8 @@ public:
     void *toContext() noexcept override;
 
     void setHandler(ITransferControl::Handler handler) override;
+
+    void setPacketSize(std::size_t packetCount) override;
 
     void setPacketCount(std::size_t packetCount) override;
 
@@ -47,6 +48,10 @@ public:
     State getState();
 
 private:
+    //получает и сразу вызывает функцию обработчик 1 пакета =>
+    //=> эмулятор работает только пакетно, при вызове stop() ждем пока заполнится и обработается 1 пакет
+     void receivePackage(uint8_t * package_begin, size_t valid_length);
+
 
     TransferParams params_;
     Handler handler_;
@@ -55,8 +60,9 @@ private:
     uint64_t sample_rate_ = 1000;
     uint8_t * native_buffer_;
 
-    std::atomic_flag is_rx;
-    std::thread * tx_thread;
+    std::atomic_flag is_rx_;
+    std::thread * rx_thread_;
+    size_t * bytes_read_;
 };
 
 #endif //RFI_BASE_ON_LIBHACKRF_TEST_TRANSFEREMULATOR_H

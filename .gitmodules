@@ -1,6 +1,3 @@
 [submodule "hackrf"]
 	path = hackrf
 	url = https://github.com/greatscottgadgets/hackrf.git
-[submodule "doctest"]
-	path = doctest
-	url = https://github.com/doctest/doctest.git

@@ -17,7 +17,10 @@ public:
         waiting = 1,
         receiving = 2,
     };
-
+    /**
+     * @param id номер эмулятора для отладочной печати
+     * @param params параметры "приема" для эмулятора
+     */
     explicit SdrEmulator(size_t id = __LINE__,
                          const TransferParams &params = TransferParams());
     SdrEmulator() = delete;

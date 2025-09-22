@@ -110,7 +110,7 @@ void SdrEmulator::start() {
 
             receivePackage(native_buffer_, valid_length);
             if (bytes_read_) {
-                printf("Bytes read: %lu\n", params_.packageSize);
+                printf("Emulator %lu gen bytes: %lu\n", sdr_id_, *bytes_read_);
             }
             state_ = State::waiting;
         }
@@ -178,7 +178,7 @@ void SdrEmulator::stop() {
     state_ = State::waiting;
 
     if (bytes_read_) {
-        printf("Bytes read: %lu\n", *bytes_read_);
+        printf("Emulator %lu gen bytes: %lu\n", sdr_id_, *bytes_read_);
     }
 }
 

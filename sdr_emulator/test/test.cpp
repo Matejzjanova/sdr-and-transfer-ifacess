@@ -22,19 +22,20 @@ ITransferControl::Handler handler = [](void* buff, size_t buff_sz) {
 class SdrEmulatorTest : public testing::Test {
 protected:
 
-    SdrEmulator emulator1{1, TransferParams(0, TransferParams::Type::loop, 1000, 100)};
+    SdrEmulator emulator1{1};
 
-    SdrEmulator emulator2{2, TransferParams(0, TransferParams::Type::loop, 1000, 100)};
+    SdrEmulator emulator2{2 };
 
     //объект для тестирования одиночного режима запуска
-    SdrEmulator single_emulator{3, TransferParams(0,TransferParams::Type::single, 1000, 100)};
+    SdrEmulator single_emulator{3};
 
     //объект для тестирования пакетного режима запуска
-    SdrEmulator packet_emulator{3, TransferParams(0,TransferParams::Type::single, 1000, 100)};
+    SdrEmulator packet_emulator{4};
 
     SdrEmulatorTest() {
 
         //все эмуляторы работают на Fd = 1 мегасемпл
+        emulator1.setType(TransferParams::Type::loop);
         emulator1.setHandler(handler_verbose);
         emulator1.setSampleRate(1e6);
 
@@ -53,7 +54,8 @@ protected:
 TEST(EmulatorTest, EmulatorCanBeCreated) {
 
     TransferParams params(1, TransferParams::Type::single, 1000, 100);
-    SdrEmulator emulator2(1, params);
+    SdrEmulator emulator2(1);
+    emulator2.setParams(params);
     ASSERT_EQ(emulator2.getState(), SdrEmulator::State::waiting);
 }
 
@@ -61,6 +63,8 @@ TEST_F(SdrEmulatorTest, RxTest) {
     //buffSize = 1000
     //chunkSize = 100
     //Fd = 1e6
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator1.setParams(params);
     emulator1.initialize();
     emulator1.start();
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
@@ -71,8 +75,12 @@ TEST_F(SdrEmulatorTest, RxTest) {
 TEST_F(SdrEmulatorTest, RxTestUs){
 
     //Обычный режим работы
+
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator1.setParams(params);
     emulator1.initialize();
-    emulator1.start();
+    EXPECT_NO_THROW(emulator1.start());
+    ASSERT_EQ(emulator1.getState(), SdrEmulator::State::receiving);
     std::this_thread::sleep_for(std::chrono::microseconds(50));
     emulator1.stop();
     emulator1.finalize();
@@ -80,6 +88,8 @@ TEST_F(SdrEmulatorTest, RxTestUs){
 
 TEST_F(SdrEmulatorTest, RxTest2){
 
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator2.setParams(params);
     //Обычный режим работы
     emulator2.initialize();
     emulator2.start();
@@ -91,8 +101,11 @@ TEST_F(SdrEmulatorTest, RxTest2){
 TEST_F(SdrEmulatorTest, RxTestSingle){
 
     //одиночный режим работы
+
+    TransferParams params(1, TransferParams::Type::single, 1000, 100);
+    EXPECT_NO_THROW(single_emulator.setParams(params));
     single_emulator.initialize();
-    single_emulator.start();
+    EXPECT_NO_THROW(single_emulator.start());
     std::this_thread::sleep_for(std::chrono::seconds (5));
     single_emulator.finalize();
 }
@@ -101,6 +114,8 @@ TEST_F(SdrEmulatorTest, RxTest1Package) {
 
     //пакетный режим с 1 пакетом
     emulator1.setPacketSize(300);
+    TransferParams params(1, TransferParams::Type::single, 1000, 100);
+    emulator2.setParams(params);
     emulator1.setPacketCount(3);
     emulator1.initialize();
     emulator1.startCounter();
@@ -111,6 +126,8 @@ TEST_F(SdrEmulatorTest, RxTest1Package) {
 TEST_F(SdrEmulatorTest, RxTestPackage) {
 
     //пакетный режим с размером буфера, не кратным размеру пакета
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator1.setParams(params);
     emulator1.setSampleRate(1000);
     emulator1.setPacketCount(4);
     emulator1.setPacketSize(300);
@@ -122,6 +139,8 @@ TEST_F(SdrEmulatorTest, RxTestPackage) {
 TEST_F(SdrEmulatorTest, RxTestManyPackage) {
 
     //прием большего числа пакетов
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator1.setParams(params);
     emulator1.setSampleRate(1e6);
     emulator1.setPacketCount(100);
     emulator1.setPacketSize(300);
@@ -132,6 +151,8 @@ TEST_F(SdrEmulatorTest, RxTestManyPackage) {
 }
 
 TEST_F(SdrEmulatorTest, EmulatorIn2DiffModes) {
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator2.setParams(params);
     emulator1.setSampleRate(1e6);
     emulator1.initialize();
     emulator1.start();
@@ -148,6 +169,8 @@ TEST_F(SdrEmulatorTest, EmulatorIn2DiffModes) {
 
 TEST_F(SdrEmulatorTest, EmulatorIn3DiffModes) {
 
+    TransferParams params(1, TransferParams::Type::loop, 1000, 100);
+    emulator1.setParams(params);
     emulator1.setSampleRate(1e6);
     emulator1.initialize();
     emulator1.start();

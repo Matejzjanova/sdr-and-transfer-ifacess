@@ -1,0 +1,8 @@
+project(rtlsdr_control)
+find_package(GTest REQUIRED)
+enable_testing()
+add_executable(rtlsdr_test test/test.cpp)
+target_sources(rtlsdr_test PUBLIC src/rtlsdr_control/rtlsdr_control.cpp include/rtlsdr_control/rtlsdr_control.h)
+target_link_libraries(rtlsdr_test PRIVATE rtl_sdr pthread sdr_rf_interface transfer_interface GTest::gtest GTest::gmock GTest::gtest_main )
+target_include_directories(rtlsdr_test PUBLIC include/rtlsdr_control/ )
+add_test(NAME rtlsdr_test COMMAND rtlsdr_test)

@@ -21,11 +21,11 @@ public:
      * @param id номер эмулятора для отладочной печати
      * @param params параметры "приема" для эмулятора
      */
-    explicit SdrEmulator(size_t id = __LINE__,
-                         const TransferParams &params = TransferParams());
+    explicit SdrEmulator(size_t id = __LINE__);
     SdrEmulator() = delete;
     void *toContext() noexcept override;
 
+    void setParams(const TransferParams & t);
     void setHandler(ITransferControl::Handler handler) override;
 
     void setPacketSize(std::size_t packetCount) override;

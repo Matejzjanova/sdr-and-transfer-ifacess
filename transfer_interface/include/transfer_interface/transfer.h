@@ -30,6 +30,7 @@ inline bool operator == (const TransferParams& left,const TransferParams& right)
 
 class ITransferControl {
 public:
+
     using Handler = std::function<void(void* ptr, std::size_t sz)>;
     explicit ITransferControl(const TransferParams& params) {};
     virtual ~ITransferControl() = default;

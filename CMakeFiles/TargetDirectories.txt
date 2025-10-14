@@ -1,0 +1,12 @@
+/home/misha/CLionProjects/RFI_base_on_libhackrf/CMakeFiles/edit_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/CMakeFiles/rebuild_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/transfer_interface/CMakeFiles/edit_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/transfer_interface/CMakeFiles/rebuild_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/sdr_emulator/CMakeFiles/emulator_test.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/sdr_emulator/CMakeFiles/edit_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/sdr_emulator/CMakeFiles/rebuild_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/sdr_rf_interface/CMakeFiles/edit_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/sdr_rf_interface/CMakeFiles/rebuild_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/rtlsdr_control/CMakeFiles/rtlsdr_test.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/rtlsdr_control/CMakeFiles/edit_cache.dir
+/home/misha/CLionProjects/RFI_base_on_libhackrf/rtlsdr_control/CMakeFiles/rebuild_cache.dir

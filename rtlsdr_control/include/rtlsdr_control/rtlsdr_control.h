@@ -5,24 +5,37 @@
 #include "sdr_rf_interface/sdr_rf.h"
 #include "transfer_interface/transfer.h"
 
+#include <condition_variable>
 #include <cstddef>
 #include <cstdint>
+#include <functional>
+#include <thread>
 #ifndef RFI_BASE_ON_LIBHACKRF_TEST_RTLSDR_H
 #define RFI_BASE_ON_LIBHACKRF_TEST_RTLSDR_H
 class RtlsdrControl : ISDRStreamTransfer, ISdrDevice, IDeviceRF {
 
 public:
+  enum class RtlsdrState {
+    waiting,
+    recieveng
+    // flushing;
+  };
+
   explicit RtlsdrControl(size_t dev_index);
   ~RtlsdrControl();
   void initialize() override;
   void finalize() override;
   // transfer param
+  void setParam(TransferParams &params);
+
   void setHandler(Handler hdl) override;
+  Handler getHandler();
   void setType(TransferParams::Type t) override;
   void setPacketSize(size_t size) override;
   std::size_t getPacketSize() const override;
   void setPacketCount(size_t packetCount) override;
 
+  void setSampleRate(uint64_t sr);
   // transfer
   void start() override;
   void startCounter() override;
@@ -51,12 +64,27 @@ public:
 private:
   void check(int retVal);
 
-  uint64_t frequencyHz = 17500000;
-  uint64_t levelDb;
-  uint64_t levelItermididateFrequency;
+  Handler hdl_;
 
-  TransferParams param;
+  void static cbWrapper(uint8_t *buf, uint32_t len, void *ctx);
 
-  rtlsdr_dev_t *device;
+  RtlsdrState state;
+
+  uint64_t frequencyHz_ = 17500000;
+  uint64_t levelDb_;
+  uint64_t levelItermididateFrequency_;
+
+  TransferParams param_;
+
+  rtlsdr_dev_t *device_;
+
+  uint64_t *gains_;
+  size_t numGains_;
+  uint32_t ifGain_;
+
+  static const uint32_t kMaxIfGain = 60;
+
+  std::thread *recieveThread;
+  std::condition_variable a;
 };
 #endif // RFI_BASE_ON_LIBHACKRF_TEST_RTLSDR_H

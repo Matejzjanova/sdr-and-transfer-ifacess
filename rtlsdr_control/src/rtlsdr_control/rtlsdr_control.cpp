@@ -5,6 +5,7 @@
 #include "transfer_interface/transfer.h"
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
 #include <rtl-sdr.h>
 #include <stdexcept>
 #include <string>
@@ -24,42 +25,91 @@ RtlsdrControl::~RtlsdrControl() {
   delete gains_;
   rtlsdr_close(device_);
 }
-void RtlsdrControl::initialize() {}
+void RtlsdrControl::initialize() {
+  if (!param_.bufferSize) {
+    throw std::runtime_error("buffer must be > 0");
+  }
+  buf_ = new uint8_t[param_.bufferSize];
+  readSz_ = new int;
+}
 
-void RtlsdrControl::finalize() {}
+void RtlsdrControl::finalize() {
+  delete[] buf_;
+  delete readSz_;
+}
 
 // transfer
 
-void RtlsdrControl::start() {
-
-  if (param_.type == TransferParams::Type::loop) {
-    rtlsdr_reset_buffer(device_);
-    if (!hdl_) {
-      throw std::runtime_error("bad handler");
+void RtlsdrControl::recieveSingle(uint8_t *currentPos, size_t available) {
+  int totalRead = 0;
+  if (available < param_.packageSize) {
+    rtlsdr_read_sync(device_, currentPos, available, readSz_);
+    if (*readSz_ <= 0) {
+      throw std::runtime_error("smth wrong with sdr, num samples read is" +
+                               std::to_string(*readSz_));
     }
-    rtlsdr_read_async(
-        device_,
-        [](uint8_t *buf, uint32_t len, void *ctx) -> void {
-          RtlsdrControl *self = static_cast<RtlsdrControl *>(ctx);
-          Handler hdl = self->getHandler();
-          hdl(buf, len);
-        },
-        this, static_cast<uint32_t>(param_.bufferSize / param_.packageSize),
-        param_.packageSize);
+    hdl_(currentPos, *readSz_);
+    rtlsdr_read_sync(device_, buf_, param_.packageSize - available, readSz_);
+    if (*readSz_ <= 0) {
+      throw std::runtime_error("smth wrong with sdr, num samples read is" +
+                               std::to_string(*readSz_));
+    }
+    hdl_(currentPos, *readSz_);
   } else {
-    rtlsdr_read_async(
-        device_,
-        [](uint8_t *buf, uint32_t len, void *ctx) -> void {
-          static_cast<RtlsdrControl *>(ctx)->getHandler()(buf, len);
-        },
-        this, param_.packageCount, param_.packageSize *param_.packageCount);
-    int packageRecieve = 0;
+    rtlsdr_reset_buffer(device_);
+    rtlsdr_read_sync(device_, currentPos, param_.packageSize, readSz_);
+    if (*readSz_ <= 0) {
+      throw std::runtime_error("smth wrong with sdr, num samples read is " +
+                               std::to_string(*readSz_));
+    }
+    hdl_(currentPos, *readSz_);
+  }
+}
+
+void RtlsdrControl::start() {
+  if (!hdl_) {
+    throw std::runtime_error("bad handler");
+  }
+  if (!buf_) {
+    throw std::runtime_error("you must initialize obj  before recieve");
+  }
+  if (param_.type == TransferParams::Type::loop) {
+
+    auto startInOtherThread = [this]() -> void {
+      size_t posCounter = 0;
+      isReceive.test_and_set();
+      while (isReceive.test()) {
+        recieveSingle(buf_ + posCounter, param_.bufferSize - posCounter);
+        posCounter += param_.packageSize;
+        posCounter = posCounter % param_.bufferSize;
+        std::cout << "bytes read: " << std::to_string(*readSz_) << std::endl;
+      }
+    };
+
+    rxThread = new std::thread(startInOtherThread);
+  } else {
+    auto startInOtherThreadSingle = [this]() -> void {
+      size_t posCounter = 0;
+      isReceive.test_and_set();
+      recieveSingle(buf_ + posCounter, param_.bufferSize - posCounter);
+      posCounter += param_.packageSize;
+      posCounter %= param_.bufferSize;
+      std::cout << "bytes read: " << std::to_string(*readSz_) << std::endl;
+    };
+    rxThread = new std::thread(startInOtherThreadSingle);
+    isReceive.clear();
   }
 }
 
 void RtlsdrControl::startCounter() {}
 
-void RtlsdrControl::stop() { check(rtlsdr_cancel_async(device_)); }
+void RtlsdrControl::stop() {
+  if (isReceive.test()) {
+    isReceive.clear();
+  } else {
+    throw std::runtime_error("nothing to stop");
+  }
+}
 
 // set transfer params
 

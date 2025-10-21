@@ -5,10 +5,9 @@
 #include "sdr_rf_interface/sdr_rf.h"
 #include "transfer_interface/transfer.h"
 
-#include <condition_variable>
+#include <atomic>
 #include <cstddef>
 #include <cstdint>
-#include <functional>
 #include <thread>
 #ifndef RFI_BASE_ON_LIBHACKRF_TEST_RTLSDR_H
 #define RFI_BASE_ON_LIBHACKRF_TEST_RTLSDR_H
@@ -38,7 +37,7 @@ public:
   void setSampleRate(uint64_t sr);
   // transfer
   void start() override;
-  void startCounter() override;
+  [[deprecated("use start with \"single\" mode")]] void startCounter() override;
   void stop() override;
 
   // sdr param
@@ -66,7 +65,7 @@ private:
 
   Handler hdl_;
 
-  void static cbWrapper(uint8_t *buf, uint32_t len, void *ctx);
+  void recieveSingle(uint8_t *currentPos, size_t available);
 
   RtlsdrState state;
 
@@ -84,7 +83,11 @@ private:
 
   static const uint32_t kMaxIfGain = 60;
 
-  std::thread *recieveThread;
-  std::condition_variable a;
+  std::thread *rxThread;
+  std::atomic_flag isReceive;
+
+  uint8_t *buf_ = nullptr;
+  int *readSz_;
 };
+
 #endif // RFI_BASE_ON_LIBHACKRF_TEST_RTLSDR_H

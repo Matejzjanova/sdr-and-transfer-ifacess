@@ -79,7 +79,7 @@ TEST_F(TestRtlSdr, TestSingle) {
   rtlsdr1.setPacketCount(2);
   ASSERT_NO_THROW(rtlsdr1.setParam(param1));
   ASSERT_NO_THROW(rtlsdr1.setHandler(handlerVerbose));
-  ASSERT_NO_THROW(rtlsdr1.setSampleRate(260000));
+  ASSERT_NO_THROW(rtlsdr1.setSampleRate(250000));
   ASSERT_NO_THROW(rtlsdr1.initialize());
   ASSERT_NO_THROW(rtlsdr1.start());
 }

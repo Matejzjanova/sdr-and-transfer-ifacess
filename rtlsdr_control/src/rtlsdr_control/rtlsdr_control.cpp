@@ -43,21 +43,31 @@ void RtlsdrControl::finalize() {
 void RtlsdrControl::recieveSingle(uint8_t *currentPos, size_t available) {
   int totalRead = 0;
   if (available < param_.packageSize) {
+    int firstRead = 0;
+    rtlsdr_reset_buffer(device_);
     rtlsdr_read_sync(device_, currentPos, available, readSz_);
     if (*readSz_ <= 0) {
       throw std::runtime_error("smth wrong with sdr, num samples read is" +
                                std::to_string(*readSz_));
     }
     hdl_(currentPos, *readSz_);
+    firstRead = *readSz_;
     rtlsdr_read_sync(device_, buf_, param_.packageSize - available, readSz_);
     if (*readSz_ <= 0) {
       throw std::runtime_error("smth wrong with sdr, num samples read is" +
                                std::to_string(*readSz_));
     }
     hdl_(currentPos, *readSz_);
+    *readSz_ += firstRead;
   } else {
     rtlsdr_reset_buffer(device_);
     rtlsdr_read_sync(device_, currentPos, param_.packageSize, readSz_);
+
+    // TODO: Переписать на while
+    // if(*readSz_ < param_.packageSize) {
+    //   rtlsdr_read_sync(device_, buf_ + *readSz_, param_.packageSize -
+    //   *readSz_, readSz_);
+    // }
     if (*readSz_ <= 0) {
       throw std::runtime_error("smth wrong with sdr, num samples read is " +
                                std::to_string(*readSz_));
@@ -89,11 +99,11 @@ void RtlsdrControl::start() {
     rxThread = new std::thread(startInOtherThread);
   } else {
     auto startInOtherThreadSingle = [this]() -> void {
-      size_t posCounter = 0;
+      // size_t posCounter = 0;
       isReceive.test_and_set();
-      recieveSingle(buf_ + posCounter, param_.bufferSize - posCounter);
-      posCounter += param_.packageSize;
-      posCounter %= param_.bufferSize;
+      recieveSingle(buf_, param_.bufferSize);
+      // posCounter += param_.packageSize;
+      // posCounter %= param_.bufferSize;
       std::cout << "bytes read: " << std::to_string(*readSz_) << std::endl;
     };
     rxThread = new std::thread(startInOtherThreadSingle);

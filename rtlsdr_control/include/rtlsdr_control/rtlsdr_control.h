@@ -14,11 +14,7 @@
 class RtlsdrControl : ISDRStreamTransfer, ISdrDevice, IDeviceRF {
 
 public:
-  enum class RtlsdrState {
-    waiting,
-    recieveng
-    // flushing;
-  };
+  enum class RtlsdrState { waiting, receiveng, flushing, counter };
 
   explicit RtlsdrControl(size_t dev_index);
   ~RtlsdrControl();
@@ -32,12 +28,11 @@ public:
   void setType(TransferParams::Type t) override;
   void setPacketSize(size_t size) override;
   std::size_t getPacketSize() const override;
-  void setPacketCount(size_t packetCount) override;
 
   void setSampleRate(uint64_t sr);
   // transfer
   void start() override;
-  [[deprecated("use start with \"single\" mode")]] void startCounter() override;
+  void startCounter() override;
   void stop() override;
 
   // sdr param
@@ -58,8 +53,6 @@ public:
   // to context
   void *toContext() noexcept override;
 
-  void setBandwith();
-
 private:
   void check(int retVal);
 
@@ -67,7 +60,7 @@ private:
 
   void recieveSingle(uint8_t *currentPos, size_t available);
 
-  RtlsdrState state;
+  RtlsdrState state_;
 
   uint64_t frequencyHz_ = 17500000;
   uint64_t levelDb_;
@@ -79,11 +72,11 @@ private:
 
   uint64_t *gains_;
   size_t numGains_;
-  uint32_t ifGain_;
+  uint32_t ifGain_ = 0;
 
   static const uint32_t kMaxIfGain = 60;
 
-  std::thread *rxThread;
+  std::thread *rxThread = nullptr;
   std::atomic_flag isReceive;
 
   uint8_t *buf_ = nullptr;

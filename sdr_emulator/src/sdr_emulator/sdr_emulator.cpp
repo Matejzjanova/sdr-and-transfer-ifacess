@@ -3,8 +3,6 @@
 //
 #include "sdr_emulator.h"
 
-#include <future>
-#include <iostream>
 #include <thread>
 
 SdrEmulator::SdrEmulator(size_t id) : ISDRStreamTransfer(TransferParams()) {
@@ -36,15 +34,46 @@ void SdrEmulator::setHandler(ITransferControl::Handler handler) {
 
 void SdrEmulator::setType(TransferParams::Type t) { params_.type = t; }
 
-void SdrEmulator::setPacketCount(std::size_t packetCount) {
-  if (state_ == State::receiving) {
-    throw std::runtime_error("Stop receiving before change params");
-  }
-  params_.packageCount = packetCount;
-}
-
 std::size_t SdrEmulator::getPacketSize() const { return params_.packageSize; }
 
+void SdrEmulator::receiveCounterPackage(uint8_t *package_begin,
+                                        size_t valid_length) {
+
+  // если доступная длина доступная длина буфера меньше размера пакета, то
+  // обрабатывать надо в два "этапа": сначала пишем в конец буфера и вызываем
+  // обработчки конца затем пишем в начала и, соответственно, вызываем
+  // обработчик начала
+
+  if (valid_length < params_.packageSize) {
+    for (int i = 0; i != valid_length; ++i) {
+      package_begin[i] = counter_;
+      counter_++;
+      if (counter_ == 256) {
+        counter_ = 0;
+      }
+      usleep(10e5 / sample_rate_);
+    }
+    handler_(package_begin, valid_length);
+    package_begin = native_buffer_;
+
+    size_t remains = params_.packageSize - valid_length;
+    for (int i = 0; i != remains; ++i) {
+      package_begin[i] = counter_;
+      counter_++;
+      if (counter_ == 256) {
+        counter_ = 0;
+      }
+      usleep(10e5 / sample_rate_);
+    }
+    handler_(package_begin, remains);
+  } else {
+    for (int i = 0; i != params_.packageSize; i++) {
+      package_begin[i] = random();
+      usleep(10e5 / sample_rate_);
+    }
+    handler_(package_begin, params_.packageSize);
+  }
+}
 void SdrEmulator::receivePackage(uint8_t *package_begin, size_t valid_length) {
 
   // если доступная длина доступная длина буфера меньше размера пакета, то
@@ -120,7 +149,6 @@ void SdrEmulator::start() {
 }
 
 void SdrEmulator::startCounter() {
-
   if (params_.bufferSize == 0) {
     throw std::runtime_error("Buffer size is zero ):");
   }
@@ -138,26 +166,31 @@ void SdrEmulator::startCounter() {
   }
 
   auto startCounterInOtherThread = [&]() {
-    is_rx_.test_and_set();
-    size_t total_bytes_rx = 0;
     size_t valid_length = params_.bufferSize;
-    for (int i = 0; i != params_.packageCount && is_rx_.test(); i++) {
+    size_t total_bytes_rx = 0;
 
-      receivePackage(native_buffer_ + i * params_.packageSize, valid_length);
-      total_bytes_rx += params_.packageSize;
-      // eсли доступная длина буфера меньше размера пакета, то "переносимся в
-      // начало" буфера
-      if (valid_length < params_.packageSize) {
-        valid_length = params_.bufferSize - valid_length;
-      }
-      // иначе просто уменьшаем доступную длину на размер полученного пакета
-      else {
-        valid_length -= params_.packageSize;
+    if (params_.type == TransferParams::Type::loop) {
+
+      is_rx_.test_and_set();
+      while (is_rx_.test()) {
+        receiveCounterPackage(native_buffer_, valid_length);
+        total_bytes_rx += params_.packageSize;
+        if (valid_length < params_.packageSize) {
+          valid_length = params_.bufferSize - valid_length;
+        } else {
+          valid_length -= params_.packageSize;
+        }
       }
     }
-    state_ = State::waiting;
+
+    else if (params_.type == TransferParams::Type::single) {
+
+      receiveCounterPackage(native_buffer_, valid_length);
+      printf("Emulator %lu gen bytes: %lu\n", sdr_id_, params_.packageSize);
+      state_ = State::waiting;
+      total_bytes_rx += params_.packageSize;
+    }
     *bytes_read_ = total_bytes_rx;
-    printf("Bytes gen: %lu\n", *bytes_read_);
   };
   state_ = SdrEmulator::State::receiving;
   rx_thread_ = new std::thread(startCounterInOtherThread);
@@ -211,3 +244,5 @@ void SdrEmulator::setPacketSize(std::size_t packetSize) {
   }
   params_.packageSize = packetSize;
 }
+
+int SdrEmulator::counter_ = 0;

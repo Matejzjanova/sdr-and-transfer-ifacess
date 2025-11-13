@@ -42,12 +42,6 @@ public:
   virtual void setHandler(Handler handler) = 0;
 
   /**
-   * @brief setPacketCount
-   * @param packetCount количество пакетов в пакетном режиме работы
-   */
-  virtual void setPacketCount(std::size_t packetCount) = 0;
-
-  /**
    * @brief getPacketSize
    * @param packetSize размер пакета в прерывании
    */
@@ -81,8 +75,7 @@ public:
       : ITransferControl(params) {}
   virtual void start() = 0;
   /**
-   * @brief startCounter получить и обработать кол-во пакетов,
-   * переданное методом setPacketCount
+   * счетчик
    */
   virtual void startCounter() = 0;
   virtual void stop() = 0;

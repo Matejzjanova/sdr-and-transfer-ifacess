@@ -48,7 +48,7 @@ public:
 
   void setSampleRate(uint64_t samples);
 
-  void setParams(TransferParams &params) override;
+  void setParams(TransferParams &params) override {};
 
   State getState();
 

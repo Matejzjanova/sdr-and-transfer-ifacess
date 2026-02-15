@@ -17,8 +17,6 @@ target_include_directories(rtlsdr_control PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc
 
 add_executable(rtlsdr_test test/test.cpp)
 
-# target_sources(rtlsdr_test PUBLIC src/rtlsdr_control/rtlsdr_control.cpp
-#         include/rtlsdr_control/rtlsdr_control.h)
 
 target_link_libraries(rtlsdr_test PRIVATE rtlsdr_control
         GTest::gtest GTest::gmock GTest::gtest_main )

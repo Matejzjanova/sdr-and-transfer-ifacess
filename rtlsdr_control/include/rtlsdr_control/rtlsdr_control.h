@@ -29,7 +29,8 @@ public:
   void setPacketSize(size_t size) override;
   std::size_t getPacketSize() const override;
 
-  void setSampleRate(uint64_t sr);
+  void setSampleRate(uint64_t sr) override;
+  void setParams(TransferParams &params) override {}
   // transfer
   void start() override;
   void startCounter() override;

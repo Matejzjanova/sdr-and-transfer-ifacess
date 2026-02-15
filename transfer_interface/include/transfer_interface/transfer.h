@@ -34,6 +34,8 @@ public:
   using Handler = std::function<void(void *ptr, std::size_t sz)>;
   explicit ITransferControl(const TransferParams &params) {};
   virtual ~ITransferControl() = default;
+
+  virtual void setParams(TransferParams &params) = 0;
   /**
    * @brief setHandler
    * @param h обработчик прерывания, вызываемый при получении прерывания от

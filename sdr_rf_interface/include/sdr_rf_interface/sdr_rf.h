@@ -24,6 +24,8 @@ public:
   virtual void setLna(uint32_t lna) = 0;
   [[nodiscard]] virtual uint32_t getLna() const = 0;
 
+  virtual void setSampleRate(uint64_t setSampleRate) = 0;
+
   ~IDeviceRF() = default;
 };
 
